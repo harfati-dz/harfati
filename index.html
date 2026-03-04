@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>حرفتي - سوق الحرف اليدوية الجزائرية</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --sand: #F5ECD7;
+      --clay: #C4783A;
+      --terracotta: #A0522D;
+      --olive: #6B7C4A;
+      --ink: #1C1209;
+      --cream: #FDF8EF;
+      --gold: #D4A847;
+      --warm-gray: #8C7B6B;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      background: rgba(253,248,239,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(196,120,58,0.15);
+      padding: 0 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 70px;
+    }
+    .logo {
+      font-family: 'Amiri', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--clay);
+      letter-spacing: 1px;
+    }
+    .logo span { color: var(--olive); }
+    .nav-links {
+      display: flex; gap: 2rem; list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--ink);
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--clay); }
+    .nav-btns { display: flex; gap: 1rem; align-items: center; }
+    .btn-outline {
+      border: 2px solid var(--clay);
+      color: var(--clay);
+      background: transparent;
+      padding: 0.4rem 1.2rem;
+      border-radius: 25px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn-outline:hover { background: var(--clay); color: white; }
+    .btn-fill {
+      background: var(--clay);
+      color: white;
+      border: none;
+      padding: 0.5rem 1.4rem;
+      border-radius: 25px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn-fill:hover { background: var(--terracotta); transform: translateY(-1px); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 100px 5% 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 80% 50%, rgba(196,120,58,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(107,124,74,0.1) 0%, transparent 60%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C4783A' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 600px;
+      animation: fadeUp 0.9s ease both;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(196,120,58,0.12);
+      border: 1px solid rgba(196,120,58,0.3);
+      color: var(--clay);
+      padding: 0.35rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-family: 'Amiri', serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      line-height: 1.2;
+      color: var(--ink);
+      margin-bottom: 1.2rem;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--clay);
+      position: relative;
+    }
+    .hero h1 em::after {
+      content: '';
+      position: absolute;
+      bottom: 2px; right: 0; left: 0;
+      height: 3px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--warm-gray);
+      margin-bottom: 2.5rem;
+      max-width: 480px;
+    }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-hero {
+      background: var(--clay);
+      color: white;
+      border: none;
+      padding: 0.85rem 2rem;
+      border-radius: 35px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 20px rgba(196,120,58,0.35);
+    }
+    .btn-hero:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(196,120,58,0.45); }
+    .btn-hero-sec {
+      background: transparent;
+      color: var(--ink);
+      border: 2px solid rgba(28,18,9,0.2);
+      padding: 0.85rem 2rem;
+      border-radius: 35px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn-hero-sec:hover { border-color: var(--clay); color: var(--clay); }
+
+    .hero-stats {
+      display: flex; gap: 2.5rem; margin-top: 3rem;
+      animation: fadeUp 0.9s 0.3s ease both;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: 'Amiri', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--clay);
+    }
+    .stat-label { font-size: 0.8rem; color: var(--warm-gray); font-weight: 600; }
+
+    .hero-image {
+      position: absolute;
+      left: 5%; top: 50%;
+      transform: translateY(-50%);
+      width: 42%;
+      max-width: 520px;
+      animation: fadeIn 1.2s 0.2s ease both;
+    }
+    .hero-image .mosaic {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 12px;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    .mosaic-card {
+      background: var(--sand);
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 1;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem;
+      transition: transform 0.3s;
+    }
+    .mosaic-card:hover { transform: scale(1.03); }
+    .mosaic-card:nth-child(1) { background: linear-gradient(135deg, #E8D5B0, #C4A26A); }
+    .mosaic-card:nth-child(2) { background: linear-gradient(135deg, #B5C9A0, #7A9B5F); grid-row: span 2; border-radius: 12px; font-size: 4rem; }
+    .mosaic-card:nth-child(3) { background: linear-gradient(135deg, #D4A0A0, #B56B6B); }
+    .mosaic-label {
+      position: absolute; bottom: 8px; right: 8px;
+      background: rgba(255,255,255,0.85);
+      padding: 3px 8px;
+      border-radius: 8px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    /* SEARCH BAR */
+    .search-section {
+      padding: 0 5% 60px;
+      position: relative; z-index: 2;
+    }
+    .search-bar {
+      background: white;
+      border-radius: 50px;
+      box-shadow: 0 8px 40px rgba(28,18,9,0.1);
+      display: flex; align-items: center;
+      padding: 0.6rem 0.6rem 0.6rem 1.5rem;
+      gap: 1rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .search-bar input {
+      flex: 1; border: none; outline: none;
+      font-family: 'Cairo', sans-serif;
+      font-size: 1rem;
+      color: var(--ink);
+      background: transparent;
+    }
+    .search-bar input::placeholder { color: var(--warm-gray); }
+    .search-bar button {
+      background: var(--clay);
+      color: white;
+      border: none;
+      padding: 0.7rem 1.8rem;
+      border-radius: 35px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    /* CATEGORIES */
+    .section { padding: 60px 5%; }
+    .section-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 2.5rem;
+    }
+    .section-title {
+      font-family: 'Amiri', serif;
+      font-size: 2rem;
+      color: var(--ink);
+    }
+    .section-title span { color: var(--clay); }
+    .section-link {
+      color: var(--clay);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 1rem;
+    }
+    .cat-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 2px solid transparent;
+      box-shadow: 0 2px 12px rgba(28,18,9,0.06);
+    }
+    .cat-card:hover {
+      border-color: var(--clay);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(196,120,58,0.15);
+    }
+    .cat-icon { font-size: 2.2rem; margin-bottom: 0.5rem; }
+    .cat-name { font-size: 0.85rem; font-weight: 700; color: var(--ink); }
+    .cat-count { font-size: 0.75rem; color: var(--warm-gray); margin-top: 2px; }
+
+    /* PRODUCTS */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+    .product-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.3s;
+      box-shadow: 0 2px 16px rgba(28,18,9,0.07);
+      cursor: pointer;
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(28,18,9,0.12);
+    }
+    .product-img {
+      width: 100%; aspect-ratio: 1;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem;
+      position: relative;
+    }
+    .product-img .badge-verified {
+      position: absolute; top: 12px; right: 12px;
+      background: var(--olive);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 10px;
+    }
+    .product-img .badge-custom {
+      position: absolute; top: 12px; left: 12px;
+      background: var(--gold);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 10px;
+    }
+    .product-info { padding: 1rem 1.2rem 1.2rem; }
+    .product-craft-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--clay);
+      background: rgba(196,120,58,0.1);
+      padding: 2px 8px;
+      border-radius: 8px;
+      display: inline-block;
+      margin-bottom: 0.4rem;
+    }
+    .product-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.3rem;
+    }
+    .product-story {
+      font-size: 0.78rem;
+      color: var(--warm-gray);
+      line-height: 1.5;
+      margin-bottom: 0.8rem;
+    }
+    .product-footer {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .product-price {
+      font-family: 'Amiri', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--clay);
+    }
+    .product-price span { font-size: 0.8rem; color: var(--warm-gray); }
+    .add-btn {
+      background: var(--clay);
+      color: white;
+      border: none;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      font-size: 1.3rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .add-btn:hover { background: var(--terracotta); transform: scale(1.1); }
+
+    .product-artisan {
+      display: flex; align-items: center; gap: 0.5rem;
+      margin-bottom: 0.7rem;
+    }
+    .artisan-avatar {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--sand);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+    }
+    .artisan-info { flex: 1; }
+    .artisan-name { font-size: 0.78rem; font-weight: 700; color: var(--ink); }
+    .artisan-region { font-size: 0.7rem; color: var(--warm-gray); }
+    .stars { color: var(--gold); font-size: 0.75rem; }
+
+    /* ARTISANS SECTION */
+    .artisans-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+    .artisan-card {
+      background: white;
+      border-radius: 20px;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 2px 16px rgba(28,18,9,0.07);
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    .artisan-card:hover { transform: translateY(-5px); box-shadow: 0 12px 32px rgba(28,18,9,0.12); }
+    .artisan-card-avatar {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: var(--sand);
+      margin: 0 auto 1rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+      border: 3px solid var(--clay);
+    }
+    .artisan-card-name { font-weight: 700; font-size: 1rem; color: var(--ink); margin-bottom: 0.2rem; }
+    .artisan-card-spec { font-size: 0.8rem; color: var(--clay); font-weight: 600; margin-bottom: 0.3rem; }
+    .artisan-card-region { font-size: 0.75rem; color: var(--warm-gray); margin-bottom: 0.8rem; }
+    .verified-badge {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      background: rgba(107,124,74,0.12);
+      color: var(--olive);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 10px;
+    }
+
+    /* HOW IT WORKS */
+    .how-section {
+      background: var(--ink);
+      padding: 80px 5%;
+      color: white;
+    }
+    .how-section .section-title { color: white; }
+    .how-section .section-title span { color: var(--gold); }
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .how-card {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: all 0.3s;
+    }
+    .how-card:hover { background: rgba(196,120,58,0.15); border-color: rgba(196,120,58,0.3); }
+    .how-num {
+      font-family: 'Amiri', serif;
+      font-size: 3rem;
+      color: var(--gold);
+      opacity: 0.4;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .how-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .how-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .how-desc { font-size: 0.85rem; color: rgba(255,255,255,0.6); line-height: 1.7; }
+
+    /* CTA */
+    .cta-section {
+      padding: 80px 5%;
+      background: linear-gradient(135deg, var(--clay) 0%, var(--terracotta) 100%);
+      text-align: center;
+      color: white;
+    }
+    .cta-section h2 {
+      font-family: 'Amiri', serif;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    .cta-section p { font-size: 1.05rem; opacity: 0.85; margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto; }
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-white {
+      background: white; color: var(--clay);
+      border: none; padding: 0.85rem 2rem;
+      border-radius: 35px; font-family: 'Cairo', sans-serif;
+      font-size: 1rem; font-weight: 700; cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+    .btn-transparent {
+      background: transparent; color: white;
+      border: 2px solid rgba(255,255,255,0.5);
+      padding: 0.85rem 2rem;
+      border-radius: 35px; font-family: 'Cairo', sans-serif;
+      font-size: 1rem; font-weight: 700; cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn-transparent:hover { border-color: white; }
+
+    /* FOOTER */
+    footer {
+      background: var(--ink);
+      color: rgba(255,255,255,0.7);
+      padding: 60px 5% 30px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+    .footer-brand .logo { font-size: 2rem; margin-bottom: 1rem; display: block; }
+    .footer-desc { font-size: 0.85rem; line-height: 1.7; }
+    .footer-col h4 { color: white; font-size: 1rem; font-weight: 700; margin-bottom: 1rem; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 0.5rem; }
+    .footer-col ul li a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.85rem; transition: color 0.3s; }
+    .footer-col ul li a:hover { color: var(--gold); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 1.5rem;
+      text-align: center;
+      font-size: 0.82rem;
+    }
+
+    /* Decorative section divider */
+    .divider {
+      text-align: center;
+      padding: 1rem 0;
+      color: var(--clay);
+      font-size: 1.5rem;
+      opacity: 0.3;
+      letter-spacing: 8px;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      .hero { flex-direction: column; text-align: center; padding-top: 90px; }
+      .hero-image { position: relative; left: auto; top: auto; transform: none; width: 90%; margin: 2rem auto 0; }
+      .hero-stats { justify-content: center; }
+      .hero-actions { justify-content: center; }
+      .nav-links { display: none; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">حرف<span>تي</span></div>
+  <ul class="nav-links">
+    <li><a href="#">المنتجات</a></li>
+    <li><a href="#">الحرفيون</a></li>
+    <li><a href="#">الفئات</a></li>
+    <li><a href="#">طلب مخصص</a></li>
+    <li><a href="#">الخريطة</a></li>
+  </ul>
+  <div class="nav-btns">
+    <button class="btn-outline">تسجيل الدخول</button>
+    <button class="btn-fill">انضم كحرفي</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">🇩🇿 &nbsp; سوق الحرف اليدوية الجزائرية</div>
+    <h1>اكتشف <em>إبداع</em><br/>الحرفيين الجزائريين</h1>
+    <p>منصة تجمع أجمل الحرف اليدوية التقليدية في مكان واحد — فخار، تطريز، نسيج، حلي، وأكثر. كل منتج يحمل قصة وهوية ثقافية أصيلة.</p>
+    <div class="hero-actions">
+      <button class="btn-hero">تصفح المنتجات</button>
+      <button class="btn-hero-sec">انضم كحرفي 🎨</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">+500</div>
+        <div class="stat-label">حرفي موثوق</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">+3000</div>
+        <div class="stat-label">منتج فريد</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">48</div>
+        <div class="stat-label">ولاية</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-image">
+    <div class="mosaic">
+      <div class="mosaic-card">🏺<span class="mosaic-label">فخار</span></div>
+      <div class="mosaic-card">🧵<span class="mosaic-label">تطريز</span></div>
+      <div class="mosaic-card">💍<span class="mosaic-label">مجوهرات</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SEARCH -->
+<div class="search-section">
+  <div class="search-bar">
+    <span>🔍</span>
+    <input type="text" placeholder="ابحث عن منتج، حرفي، أو منطقة..."/>
+    <button>بحث</button>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<section class="section">
+  <div class="section-header">
+    <h2 class="section-title">تصفح <span>الفئات</span></h2>
+    <a href="#" class="section-link">عرض الكل ←</a>
+  </div>
+  <div class="categories-grid">
+    <div class="cat-card"><div class="cat-icon">🏺</div><div class="cat-name">فخار وسيراميك</div><div class="cat-count">128 منتج</div></div>
+    <div class="cat-card"><div class="cat-icon">🧵</div><div class="cat-name">تطريز تقليدي</div><div class="cat-count">94 منتج</div></div>
+    <div class="cat-card"><div class="cat-icon">🧶</div><div class="cat-name">نسيج وزرابي</div><div class="cat-count">76 منتج</div></div>
+    <div class="cat-card"><div class="cat-icon">💍</div><div class="cat-name">مجوهرات وحلي</div><div class="cat-count">210 منتج</div></div>
+    <div class="cat-card"><div class="cat-icon">🪵</div><div class="cat-name">نحت الخشب</div><div class="cat-count">55 منتج</div></div>
+    <div class="cat-card"><div class="cat-icon">👜</div><div class="cat-name">صناعة جلدية</div><div class="cat-count">88 منتج</div></div>
+    <div class="cat-card"><div class="cat-icon">🕌</div><div class="cat-name">صناعة الخيم</div><div class="cat-count">32 منتج</div></div>
+    <div class="cat-card"><div class="cat-icon">🌿</div><div class="cat-name">عطور طبيعية</div><div class="cat-count">61 منتج</div></div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="section" style="background: var(--sand); border-radius: 30px; margin: 0 2%;">
+  <div class="section-header">
+    <h2 class="section-title">منتجات <span>مميزة</span></h2>
+    <a href="#" class="section-link">عرض الكل ←</a>
+  </div>
+  <div class="products-grid">
+
+    <div class="product-card">
+      <div class="product-img" style="background: linear-gradient(135deg,#E8D5B0,#C4A26A);">
+        🏺
+        <span class="badge-verified">✓ موثوق</span>
+      </div>
+      <div class="product-info">
+        <span class="product-craft-tag">فخار · قسنطينة</span>
+        <div class="product-artisan">
+          <div class="artisan-avatar">👩</div>
+          <div class="artisan-info">
+            <div class="artisan-name">فاطمة بن علي</div>
+            <div class="artisan-region">📍 قسنطينة</div>
+          </div>
+          <div class="stars">★★★★★</div>
+        </div>
+        <div class="product-name">طاجين فخاري تقليدي</div>
+        <div class="product-story">صُنع يدوياً باستخدام طين قسنطينة الأصيل، موروث عائلي منذ 3 أجيال</div>
+        <div class="product-footer">
+          <div class="product-price">2500 <span>دج</span></div>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img" style="background: linear-gradient(135deg,#B5C9A0,#7A9B5F);">
+        🧵
+        <span class="badge-verified">✓ موثوق</span>
+        <span class="badge-custom">طلب مخصص</span>
+      </div>
+      <div class="product-info">
+        <span class="product-craft-tag">تطريز · تلمسان</span>
+        <div class="product-artisan">
+          <div class="artisan-avatar">👩</div>
+          <div class="artisan-info">
+            <div class="artisan-name">مريم الهاشمي</div>
+            <div class="artisan-region">📍 تلمسان</div>
+          </div>
+          <div class="stars">★★★★★</div>
+        </div>
+        <div class="product-name">قفطان تلمساني مطرز</div>
+        <div class="product-story">تطريز يدوي بخيوط ذهبية على قماش حرير، تصميم قابل للتخصيص</div>
+        <div class="product-footer">
+          <div class="product-price">12000 <span>دج</span></div>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img" style="background: linear-gradient(135deg,#D4B8A0,#A0785A);">
+        💍
+        <span class="badge-verified">✓ موثوق</span>
+      </div>
+      <div class="product-info">
+        <span class="product-craft-tag">مجوهرات · غرداية</span>
+        <div class="product-artisan">
+          <div class="artisan-avatar">👨</div>
+          <div class="artisan-info">
+            <div class="artisan-name">يوسف أمزيان</div>
+            <div class="artisan-region">📍 غرداية</div>
+          </div>
+          <div class="stars">★★★★☆</div>
+        </div>
+        <div class="product-name">أسوارة فضية بيزانتية</div>
+        <div class="product-story">فضة نقية 925 بنقوش بربرية أصيلة، كل قطعة فريدة ومرقّمة</div>
+        <div class="product-footer">
+          <div class="product-price">4800 <span>دج</span></div>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img" style="background: linear-gradient(135deg,#C9B8D4,#8B6BA0);">
+        🧶
+        <span class="badge-verified">✓ موثوق</span>
+        <span class="badge-custom">طلب مخصص</span>
+      </div>
+      <div class="product-info">
+        <span class="product-craft-tag">نسيج · بجاية</span>
+        <div class="product-artisan">
+          <div class="artisan-avatar">👩</div>
+          <div class="artisan-info">
+            <div class="artisan-name">نجمة آيت حمودة</div>
+            <div class="artisan-region">📍 بجاية</div>
+          </div>
+          <div class="stars">★★★★★</div>
+        </div>
+        <div class="product-name">زربية قبائلية يدوية</div>
+        <div class="product-story">نسج يدوي بصوف طبيعي وأصباغ نباتية، رسومات أمازيغية أصيلة</div>
+        <div class="product-footer">
+          <div class="product-price">18000 <span>دج</span></div>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider">✦ ✦ ✦</div>
+
+<!-- ARTISANS -->
+<section class="section">
+  <div class="section-header">
+    <h2 class="section-title">حرفيون <span>موثوقون</span></h2>
+    <a href="#" class="section-link">عرض الكل ←</a>
+  </div>
+  <div class="artisans-grid">
+    <div class="artisan-card">
+      <div class="artisan-card-avatar">👩</div>
+      <div class="artisan-card-name">فاطمة بن علي</div>
+      <div class="artisan-card-spec">فخار وسيراميك</div>
+      <div class="artisan-card-region">📍 قسنطينة</div>
+      <span class="verified-badge">✓ حرفي موثوق</span>
+    </div>
+    <div class="artisan-card">
+      <div class="artisan-card-avatar">👨</div>
+      <div class="artisan-card-name">يوسف أمزيان</div>
+      <div class="artisan-card-spec">مجوهرات فضية</div>
+      <div class="artisan-card-region">📍 غرداية</div>
+      <span class="verified-badge">✓ حرفي موثوق</span>
+    </div>
+    <div class="artisan-card">
+      <div class="artisan-card-avatar">👩</div>
+      <div class="artisan-card-name">مريم الهاشمي</div>
+      <div class="artisan-card-spec">تطريز تقليدي</div>
+      <div class="artisan-card-region">📍 تلمسان</div>
+      <span class="verified-badge">✓ حرفي موثوق</span>
+    </div>
+    <div class="artisan-card">
+      <div class="artisan-card-avatar">👩</div>
+      <div class="artisan-card-name">نجمة آيت حمودة</div>
+      <div class="artisan-card-spec">نسيج قبائلي</div>
+      <div class="artisan-card-region">📍 بجاية</div>
+      <span class="verified-badge">✓ حرفي موثوق</span>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <div class="section-header" style="margin-bottom:0">
+    <h2 class="section-title">كيف <span>تعمل</span> المنصة؟</h2>
+  </div>
+  <div class="how-grid">
+    <div class="how-card">
+      <div class="how-num">01</div>
+      <div class="how-icon">🔍</div>
+      <div class="how-title">تصفح واكتشف</div>
+      <div class="how-desc">تصفح آلاف المنتجات الحرفية الأصيلة من مختلف ولايات الجزائر</div>
+    </div>
+    <div class="how-card">
+      <div class="how-num">02</div>
+      <div class="how-icon">💬</div>
+      <div class="how-title">تواصل مع الحرفي</div>
+      <div class="how-desc">تحدث مع الحرفي مباشرة، اطلب تخصيص المنتج حسب ذوقك</div>
+    </div>
+    <div class="how-card">
+      <div class="how-num">03</div>
+      <div class="how-icon">🛒</div>
+      <div class="how-title">اطلب وادفع بأمان</div>
+      <div class="how-desc">أضف للسلة وادفع بطريقة آمنة، الدفع عند الاستلام متاح</div>
+    </div>
+    <div class="how-card">
+      <div class="how-num">04</div>
+      <div class="how-icon">📦</div>
+      <div class="how-title">التوصيل لبابك</div>
+      <div class="how-desc">نوصّل لجميع ولايات الجزائر عبر شركاء توصيل موثوقين</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>أنت حرفي؟ انضم إلينا الآن!</h2>
+  <p>أنشئ متجرك المجاني، اعرض منتجاتك لآلاف الزبائن في كل الجزائر</p>
+  <div class="cta-btns">
+    <button class="btn-white">أنشئ متجرك مجاناً 🎨</button>
+    <button class="btn-transparent">تعرف على المزيد</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="logo">حرف<span>تي</span></span>
+      <p class="footer-desc">منصة جزائرية تجمع الحرفيين التقليديين بالزبائن، نحيي التراث ونرقمن الحرفة.</p>
+    </div>
+    <div class="footer-col">
+      <h4>المنصة</h4>
+      <ul>
+        <li><a href="#">المنتجات</a></li>
+        <li><a href="#">الحرفيون</a></li>
+        <li><a href="#">الفئات</a></li>
+        <li><a href="#">الخريطة</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>للحرفيين</h4>
+      <ul>
+        <li><a href="#">سجّل كحرفي</a></li>
+        <li><a href="#">كيف تبيع؟</a></li>
+        <li><a href="#">العمولات</a></li>
+        <li><a href="#">الدعم</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>تواصل معنا</h4>
+      <ul>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Facebook</a></li>
+        <li><a href="#">WhatsApp</a></li>
+        <li><a href="#">البريد الإلكتروني</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2025 حرفتي — صُنع بـ ❤️ في الجزائر
+  </div>
+</footer>
+
+</body>
+</html>
